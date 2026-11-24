@@ -1,4 +1,4 @@
-import { hash } from '../utils/helpers';
+import { hashPassword } from '../utils/helpers.js';
 
 const PREFIX = 'acme_';
 
