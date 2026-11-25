@@ -5,3 +5,9 @@ export async function hashPassword(text) {
     .map(byte => byte.toString(16).padStart(2, '0'))
     .join('');
 }
+
+export function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[char]));
+}
