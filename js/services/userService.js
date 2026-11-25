@@ -3,11 +3,11 @@ import { hashPassword } from '../utils/helpers.js';
 import { getSession, updateSession } from './authService.js';
 
 export function getUsers() {
-    return get(KEYS.USERS, []);
+  return get(KEYS.USERS, []);
 }
 
-export function getUsersById(id) {
-    return getUsers().find(user => user.id === id) ?? null;
+export function getUserById(id) {
+  return getUsers().find(user => user.id === id) ?? null;
 }
 
 export function findDuplicates({ documento, email }, ignoreId = null) {
@@ -15,10 +15,10 @@ export function findDuplicates({ documento, email }, ignoreId = null) {
   const others = getUsers().filter(user => user.id !== ignoreId);
 
   if (others.some(user => user.documento === documento)) {
-    errors.documento = 'Ya existe un usuario con este nuemrod e identificacion. Intenta de nuevo.';
+    errors.documento = 'Ya existe un usuario con este número de identificación.';
   }
-  if(others.some(user => user.email.toLowerCase() === email.toLowerCase())) {
-    errors.email ='Ya existe un usuario con este correo. ';
+  if (others.some(user => user.email.toLowerCase() === email.toLowerCase())) {
+    errors.email = 'Ya existe un usuario con este correo.';
   }
   return errors;
 }
@@ -50,8 +50,6 @@ export async function updateUser(id, data) {
     email: data.email,
     telefono: data.telefono,
     cargo: data.cargo,
-    
-    //Si la contraseña llegase a estar vacia se usa la que ya se tenia antes crack
     passwordHash: data.password ? await hashPassword(data.password) : current.passwordHash
   };
 
