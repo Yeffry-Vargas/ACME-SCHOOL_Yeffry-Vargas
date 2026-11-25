@@ -24,3 +24,8 @@ export function logout() {
 export function isAuthenticated() {
     return getSession() !== null;
 }
+
+export function updateSession(user) {
+  set(KEYS.SESSION, { userId: user.id, email: user.email, nombre: user.nombre });
+  window.dispatchEvent(new CustomEvent('auth-changed'));
+}
