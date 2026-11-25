@@ -64,7 +64,22 @@ const css = `
   .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .btn:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
   .btn-block { width: 100%; }
+
+  h2 { margin: 0 0 var(--space-2); font-size: 1.2rem; }
+
+  .actions { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+
+  .btn-secondary { background: var(--color-border); color: var(--color-text); }
+  .btn-secondary:hover { background: #d1d5db; }
+
+  .btn-danger { background: var(--color-danger); }
+  .btn-danger:hover { background: #c1121f; }
+
+  .btn-sm { padding: 0.35rem 0.8rem; font-size: 0.9rem; }
+
+  .hint { color: var(--color-muted); font-size: 0.85rem; margin: 0.3rem 0 0; }
 `;
 
 export const sharedSheet = new CSSStyleSheet();
 sharedSheet.replaceSync(css);
+
