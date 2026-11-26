@@ -5,9 +5,11 @@ import './components/app-modal.js';
 import './components/data-table.js';
 import './views/login-view.js';
 import './views/users-view.js';
-import { startRouter } from './router.js';
 import './views/exams-view.js';
 import './views/questions-editor.js';
+import './views/exam-list-view.js';
+import './views/exam-start-view.js';
+import { startRouter } from './router.js';
 
 await initStorage();
 startRouter();
