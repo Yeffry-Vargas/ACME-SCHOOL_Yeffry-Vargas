@@ -6,7 +6,8 @@ export const KEYS = {
   USERS: 'users',
   EXAMS: 'exams',
   RESULTS: 'results',
-  SESSION: 'session'
+  SESSION: 'session',
+  ATTEMPT: 'attempt'
 };
 
 export function get(key, fallback = null) {
@@ -45,3 +46,4 @@ export async function initStorage() {
   if (get(KEYS.EXAMS) === null) set(KEYS.EXAMS, []);
   if (get(KEYS.RESULTS) === null) set(KEYS.RESULTS, []);
 }
+
