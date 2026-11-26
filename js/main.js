@@ -6,6 +6,7 @@ import './components/data-table.js';
 import './views/login-view.js';
 import './views/users-view.js';
 import { startRouter } from './router.js';
+import './views/exams-view.js';
 
 await initStorage();
 startRouter();
