@@ -63,3 +63,14 @@ export function validateQuestion(data) {
   }
   return errors;
 }
+
+export function validateStudent(data) {
+  const errors = {};
+  if (!/^\d{5,15}$/.test(data.documento)) {
+    errors.documento = 'Solo números, entre 5 y 15 dígitos.';
+  }
+  if (data.nombre.length < 3) {
+    errors.nombre = 'Escribe tu nombre completo (mínimo 3 caracteres).';
+  }
+  return errors;
+}
