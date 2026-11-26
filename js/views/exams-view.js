@@ -2,6 +2,7 @@ import { sharedSheet } from '../utils/sharedStyles.js';
 import { validateExam } from '../utils/validators.js';
 import { notify } from '../utils/notify.js';
 import { confirmAction } from '../utils/dialogs.js';
+import { navigate } from '../router.js';
 import {
   getExams, getExamById, createExam, updateExam, deleteExam, findDuplicateCode
 } from '../services/examService.js';
@@ -33,6 +34,7 @@ class ExamsView extends HTMLElement {
     this.onSubmit = this.onSubmit.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onQuestions = this.onQuestions.bind(this);
     this.resetForm = this.resetForm.bind(this);
   }
 
@@ -78,12 +80,14 @@ class ExamsView extends HTMLElement {
     this.table = this.$('table');
     this.table.columns = COLUMNS;
     this.table.labelKey = 'titulo';
+    this.table.extraActions = [{ action: 'questions', label: 'Preguntas' }];
     this.table.emptyMessage = 'Aún no hay exámenes. Crea el primero con el formulario.';
 
     this.form.addEventListener('submit', this.onSubmit);
     this.$('cancel').addEventListener('click', this.resetForm);
     this.table.addEventListener('row-edit', this.onEdit);
     this.table.addEventListener('row-delete', this.onDelete);
+    this.table.addEventListener('row-questions', this.onQuestions);
 
     this.refreshTable();
   }
@@ -163,6 +167,11 @@ class ExamsView extends HTMLElement {
     } catch (error) {
       notify(error.message, 'error');
     }
+  }
+
+    
+  onQuestions(event) {
+    navigate(`/exams/questions?id=${encodeURIComponent(event.detail.id)}`);
   }
 
   onEdit(event) {
