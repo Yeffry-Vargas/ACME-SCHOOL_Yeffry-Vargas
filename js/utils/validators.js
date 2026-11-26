@@ -46,3 +46,20 @@ export function validateExam(data) {
   }
   return errors;
 }
+
+export function validateQuestion(data) {
+  const errors = {};
+  const answers = data.respuestas;
+
+  if (data.enunciado.length < 5) {
+    errors.enunciado = 'Escribe la pregunta (mínimo 5 caracteres).';
+  }
+  if (answers.length < 2) {
+    errors.respuestas = 'Cada pregunta necesita mínimo 2 respuestas.';
+  } else if (answers.some(a => a.texto.trim() === '')) {
+    errors.respuestas = 'Todas las respuestas deben tener texto.';
+  } else if (answers.filter(a => a.correcta).length !== 1) {
+    errors.respuestas = 'Marca exactamente una respuesta como correcta.';
+  }
+  return errors;
+}
