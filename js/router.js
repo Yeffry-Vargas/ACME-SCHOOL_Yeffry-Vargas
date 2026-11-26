@@ -5,7 +5,9 @@ const routes = {
   '/login': { tag: 'login-view',     title: 'Iniciar sesión', public: true, guestOnly: true },
   '/users': { tag: 'users-view',     title: 'Gestión de usuarios' },
   '/exams': { tag: 'exams-view',     title: 'Gestión de exámenes' },
-  '/exams/questions': { tag: 'questions-editor', title: 'Preguntas del examen' }
+  '/exams/questions': { tag: 'questions-editor', title: 'Preguntas del examen' },
+  '/resolver/datos':  { tag: 'exam-start-view', title: 'Identificación', public: true },
+  '/resolver/examen': { tag: 'exam-take-view',  title: 'Examen', public: true }
 };
 
 export function navigate(path) {
