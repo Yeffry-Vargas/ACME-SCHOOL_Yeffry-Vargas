@@ -8,6 +8,7 @@ class DataTable extends HTMLElement {
     this.shadowRoot.adoptedStyleSheets = [sharedSheet];
     this._columns = [];
     this._rows = [];
+    this._extra = [];                      // botones extra: [{ action, label }]
     this.labelKey = 'nombre';
     this.emptyMessage = 'No hay registros todavía.';
 
@@ -22,6 +23,7 @@ class DataTable extends HTMLElement {
 
   set columns(value) { this._columns = value; this.render(); }
   set rows(value) { this._rows = value; this.render(); }
+  set extraActions(value) { this._extra = value; this.render(); }
 
   render() {
     const head = this._columns
@@ -30,17 +32,24 @@ class DataTable extends HTMLElement {
     const body = this._rows.length
       ? this._rows.map(row => {
           const label = escapeHTML(row[this.labelKey]);
+          const id = escapeHTML(row.id);
           const cells = this._columns
             .map(col => `<td>${escapeHTML(row[col.key])}</td>`).join('');
+          const extras = this._extra.map(a => `
+            <button class="btn btn-sm" type="button"
+                    data-action="${escapeHTML(a.action)}" data-id="${id}"
+                    aria-label="${escapeHTML(a.label)} de ${label}">${escapeHTML(a.label)}</button>`
+          ).join('');
           return `
             <tr>
               ${cells}
               <td class="row-actions">
+                ${extras}
                 <button class="btn btn-secondary btn-sm" type="button"
-                        data-action="edit" data-id="${escapeHTML(row.id)}"
+                        data-action="edit" data-id="${id}"
                         aria-label="Editar ${label}">Editar</button>
                 <button class="btn btn-danger btn-sm" type="button"
-                        data-action="delete" data-id="${escapeHTML(row.id)}"
+                        data-action="delete" data-id="${id}"
                         aria-label="Eliminar ${label}">Eliminar</button>
               </td>
             </tr>`;
