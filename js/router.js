@@ -4,7 +4,8 @@ const routes = {
   '/':      { tag: 'exam-list-view', title: 'Exámenes disponibles', public: true },
   '/login': { tag: 'login-view',     title: 'Iniciar sesión', public: true, guestOnly: true },
   '/users': { tag: 'users-view',     title: 'Gestión de usuarios' },
-  '/exams': { tag: 'exams-view',     title: 'Gestión de exámenes' }
+  '/exams': { tag: 'exams-view',     title: 'Gestión de exámenes' },
+  '/exams/questions': { tag: 'questions-editor', title: 'Preguntas del examen' }
 };
 
 export function navigate(path) {
@@ -12,20 +13,15 @@ export function navigate(path) {
 }
 
 function currentPath() {
-  return location.hash.slice(1) || '/';
+  return (location.hash.slice(1) || '/').split('?')[0];
 }
 
 function render() {
   const path = currentPath();
   const route = routes[path];
 
-  //  Si la ruta no existe va al inici
   if (!route) return navigate('/');
-
-  // GUARD: ruta privada sin sesion va al login
   if (!route.public && !isAuthenticated()) return navigate('/login');
-
-  // Si ya inicio sesion el usuario el login no tiene sentido
   if (route.guestOnly && isAuthenticated()) return navigate('/users');
 
   const app = document.getElementById('app');
@@ -35,7 +31,6 @@ function render() {
   if (customElements.get(route.tag)) {
     view = document.createElement(route.tag);
   } else {
-    // Mientras se construten las vistas se uestra un marcdor
     view = document.createElement('section');
     view.innerHTML = `<h1>${route.title}</h1>
       <p>Esta vista se construirá en un próximo paso.</p>`;
@@ -44,7 +39,7 @@ function render() {
   app.append(view);
 
   document.title = `${route.title} – Acme School`;
-  app.focus(); 
+  app.focus();
 }
 
 export function startRouter() {
